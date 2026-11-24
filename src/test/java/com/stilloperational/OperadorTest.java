@@ -23,7 +23,9 @@ class OperadorTest {
     @Test
     void testarNOT() {
         assertFalse(Operador.NOT.aplicar(true, false));
+        assertFalse(Operador.NOT.aplicar(true, true));
         assertTrue(Operador.NOT.aplicar(false, false));
+        assertTrue(Operador.NOT.aplicar(false, true));
     }
 
 }

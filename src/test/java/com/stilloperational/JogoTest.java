@@ -31,4 +31,15 @@ class JogoTest {
         assertEquals(1, jogo.faseAtual());
         assertEquals(0, jogo.tokens());
     }
+
+    @Test
+    void testarAcessoAposConclusao() {
+        Jogo jogo = new Jogo();
+
+        jogo.responder(Operador.AND);
+        jogo.responder(Operador.OR);
+        jogo.responder(Operador.NOT);
+
+        assertThrows(IllegalStateException.class, jogo::atual);
+    }
 }

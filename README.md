@@ -74,9 +74,9 @@ O projeto utiliza JUnit 5 para validar suas principais funcionalidades.
 |---|---|---|
 | OperadorTest | Validação de AND, OR e NOT | 3 |
 | ManutencaoTest | Validação de respostas | 2 |
-| JogoTest | Estado inicial, progressão e tokens | 3 |
+| JogoTest | Estado inicial, progressão, tokens e proteção de acesso | 4 |
 | IntegracaoTest | Simulação de uma partida completa | 1 |
-| Total | | 9 |
+| Total | | 10 |
 
 Para executar os testes pelo IntelliJ IDEA, acesse:
 
@@ -128,6 +128,18 @@ Cada manutenção concluída concede um token ao jogador. As fases são disponib
 Ao concluir todas as manutenções, o sistema informa que a instalação foi estabilizada.
 
 O progresso é mantido apenas durante a partida. Ao encerrar o programa, uma nova execução começa do início.
+
+## Revisão de código e refatoração
+
+A revisão interna realizada em 24/11/2026 resultou nas seguintes melhorias:
+
+- Fechamento automático do Scanner utilizando try-with-resources.
+- Melhoria da organização e legibilidade do código.
+- Tratamento de acesso a manutenções após a conclusão da partida.
+- Ampliação dos testes do operador NOT.
+- Inclusão de teste para validar a proteção após o término da partida.
+
+Após as alterações, os 10 testes automatizados foram executados com sucesso, sem falhas ou erros.
 
 ## Direção do projeto
 

@@ -24,10 +24,16 @@ public class Jogo {
     }
 
     /**
-     * @return manutenção atual que o jogador precisa resolver
-     * @throws IndexOutOfBoundsException se o jogo já terminou
+     * Retorna a manutenção atual.
+     *
+     * @return manutenção que o jogador precisa resolver
+     * @throws IllegalStateException se a partida estiver concluída
      */
     public Manutencao atual() {
+        if (terminou()) {
+            throw new IllegalStateException("A partida ja foi concluida.");
+        }
+
         return manutencoes.get(fase);
     }
 
