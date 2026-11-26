@@ -127,7 +127,7 @@ public class JanelaPrincipal extends JFrame {
 
         // Primeira tela do jogo
 
-        mostrarIntroducao();
+        trocarTela(new PainelFlames(this::mostrarIntroducao));
 
         getContentPane().setPreferredSize(
                 new Dimension(960, 540)
