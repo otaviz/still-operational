@@ -1,156 +1,145 @@
+<p align="center">
+  <img src="src/main/resources/logo.png" alt="Still Operational" width="520">
+</p>
 
 # Still Operational
 
-**Still Operational** é um jogo educativo de lógica booleana, planejado como uma experiência **2D em pixel art**, com puzzles, humor e uma ambientação futurista.
+**Um zelador. Uma instalação. Lógica para manter tudo funcionando.**
+
+Jogo educativo individual de lógica booleana, desenvolvido em Java com interface 2D em pixel art, narrativa e humor. Projeto acadêmico de Engenharia de Software II.
 
 ## Sobre o jogo
 
-Em uma instalação quase totalmente automatizada, um zelador é o único humano responsável por resolver problemas simples que os sistemas de inteligência artificial não conseguem solucionar. A instalação desperdiça seus recursos com comandos excessivos, enquanto operações básicas de lógica booleana continuam precisando de manutenção.
+Em uma instalação quase inteiramente automatizada, o único funcionário humano precisa corrigir falhas que a inteligência artificial não consegue resolver. O sistema desperdiçou seus recursos em comandos excessivos e esqueceu o básico: lógica booleana.
 
-O jogador deve interpretar cada situação, selecionar o operador lógico adequado e restaurar o funcionamento dos sistemas. Ao concluir manutenções, coleta cartões físicos chamados *tokens*, necessários para avançar no objetivo da história.
+O jogador assume o papel do zelador, restaura três setores e recupera os cartões físicos (tokens) necessários para reiniciar o servidor central.
 
-O projeto busca ensinar os operadores **AND, OR e NOT** por meio de desafios contextualizados, sem exigir conhecimento prévio de programação.
+O objetivo pedagógico é ensinar AND, OR e NOT por meio de situações contextualizadas, sem exigir conhecimento prévio de programação.
 
-## Estado atual do desenvolvimento
+## Funcionalidades implementadas
 
-A versão disponível em Java é um **protótipo funcional em console**, utilizado para validar as regras do jogo antes da implementação da interface 2D em pixel art.
+- Abertura institucional da FLAMES, introdução narrativa e menu principal.
+- Treinamento interativo sobre valores booleanos e operadores lógicos, com opção de pular.
+- Três manutenções sequenciais: segurança, emergência e iluminação.
+- Sensores interativos e seleção de operadores.
+- Validação de todas as combinações de entradas aplicáveis à manutenção.
+- Feedback de erro com dicas progressivas e novas tentativas sem penalidade.
+- Um token por manutenção concluída.
+- Sequência final de reinicialização do servidor e retorno ao menu.
+- Animações, efeitos sonoros, música de fundo e ícone personalizado.
+- Empacotamento portátil para Windows com ambiente Java incorporado.
 
-Funcionalidades implementadas:
+## Como jogar
 
-- Três desafios de manutenção em sequência;
-- Seleção dos operadores AND, OR e NOT;
-- Verificação de respostas e possibilidade de tentar novamente;
-- Avanço de fase e concessão de um token por manutenção concluída;
-- Separação da lógica do jogo e da interação pelo console;
-- Testes unitários e de integração;
-- Documentação das classes e métodos utilizando JavaDoc.
+1. Abra o jogo, avance pela introdução ou pule para o menu.
+2. Inicie uma partida e acompanhe o treinamento, se desejar.
+3. Leia o diálogo e o problema de manutenção.
+4. Observe as entradas, selecione AND, OR ou NOT e confirme.
+5. Se a configuração estiver incorreta, leia a dica e tente novamente.
+6. Após cada acerto, receba um token e continue.
+7. Conclua as três manutenções para restaurar o servidor.
 
-**Limitação atual:** o progresso e os tokens são mantidos apenas durante a execução. O salvamento local e a interface gráfica ainda não foram implementados.
+| Operador | Regra |
+|---|---|
+| AND | Verdadeiro somente quando ambas as entradas são verdadeiras. |
+| OR | Verdadeiro quando pelo menos uma entrada é verdadeira. |
+| NOT | Inverte a primeira entrada; a segunda não é utilizada. |
 
-## Manual do desenvolvedor
+O progresso é mantido em memória durante a partida. Uma nova partida começa com zero tokens. Não há salvamento permanente, exploração livre nem modo multijogador.
 
-### Requisitos
+## Execução pelo código-fonte
 
-- Java JDK 25;
-- Apache Maven;
-- IntelliJ IDEA (recomendado);
-- Git para versionamento.
-
-### Instalação
-
-Clone o repositório:
+**Requisitos:** JDK 25, Apache Maven e Git. IntelliJ IDEA é recomendado, mas não obrigatório.
 
 ```bash
 git clone https://github.com/otaviz/still-operational.git
+cd still-operational
+mvn clean package
+java -cp target/still-operational-1.0-SNAPSHOT.jar com.stilloperational.JanelaPrincipal
 ```
 
-Abra a pasta clonada no IntelliJ IDEA e sincronize o projeto Maven para instalar as dependências.
+No IntelliJ, abra a pasta do projeto, sincronize o Maven e execute o método `main` de `JanelaPrincipal.java`. A classe `Main.java` preserva o protótipo original em console.
 
-### Como executar
+## Executável Windows
 
-No IntelliJ IDEA, localize a classe `Main.java`, dentro do package `com.stilloperational`, e execute seu método `main`.
+O script `gerar-executavel.ps1` utiliza o jpackage do JDK para gerar uma imagem de aplicativo com runtime próprio. O arquivo `StillOperational.ico` é utilizado como ícone do executável.
 
-Também é possível executar pelo terminal, na raiz do projeto, caso o Maven esteja configurado no sistema:
+Primeiro execute `mvn clean package` (ou Maven → Lifecycle → clean e package pelo IntelliJ). Em seguida, no PowerShell, na raiz do projeto:
 
-```bash
-mvn compile
-java -cp target/classes com.stilloperational.Main
+```powershell
+powershell -ExecutionPolicy Bypass -File .\gerar-executavel.ps1 -JdkHome "C:\Program Files\Java\jdk-25.0.4"
 ```
 
-### Organização do código
+Substitua o caminho pelo JDK 25 instalado no computador. Caso o diretório de saída já exista, renomeie-o antes de gerar outra versão.
 
-- `Main.java` — inicia o programa e recebe as escolhas do jogador.
-- `Jogo.java` — controla as manutenções, a progressão e a contagem de tokens.
-- `Manutencao.java` — representa um desafio e verifica a resposta.
-- `Operador.java` — implementa os operadores booleanos.
-- `pom.xml` — configura o projeto Maven e suas dependências.
-- `src/test/java` — armazena os testes automatizados.
+O resultado fica em `dist/StillOperational/`. Abra `StillOperational.exe` e mantenha as pastas `app` e `runtime` junto ao executável. A distribuição não exige instalação separada do Java, em sistemas Windows compatíveis com a arquitetura do pacote. A pasta `dist` é ignorada pelo Git.
 
-### Testes automatizados
+O executável foi validado manualmente no computador do desenvolvedor. A compatibilidade em outros computadores ainda requer validação.
 
-O projeto utiliza JUnit 5 para validar suas principais funcionalidades.
+## Arquitetura
 
-| Classe de teste | Responsabilidade | Testes |
-|---|---|---|
-| OperadorTest | Validação de AND, OR e NOT | 3 |
-| ManutencaoTest | Validação de respostas | 2 |
-| JogoTest | Estado inicial, progressão, tokens e proteção de acesso | 4 |
-| IntegracaoTest | Simulação de uma partida completa | 1 |
-| Total | | 10 |
+O código utiliza Java orientado a objetos, Swing/AWT e Java Sound, sem dependências externas de execução.
 
-Para executar os testes pelo IntelliJ IDEA, acesse:
-
-Maven > Lifecycle > test
-
-Caso o Maven esteja configurado no terminal:
-
-```bash
-mvn test
-```
-
-Na execução realizada em 24/11/2026, os nove testes foram aprovados, sem falhas ou erros.
-
-### Documentação do código
-
-As quatro classes principais possuem comentários JavaDoc, descrevendo suas responsabilidades, métodos, parâmetros e retornos.
-
-## Manual do usuário
-
-### Objetivo
-
-O jogador assume o papel de um zelador responsável por realizar a manutenção de uma instalação automatizada.
-
-Para concluir uma manutenção, é necessário interpretar o problema apresentado e escolher o operador lógico adequado.
-
-### Operadores disponíveis
-
-| Comando | Funcionamento |
+| Componente | Responsabilidade |
 |---|---|
-| AND | Todas as condições precisam ser verdadeiras. |
-| OR | Pelo menos uma condição precisa ser verdadeira. |
-| NOT | Inverte o valor lógico de uma condição. |
-| SAIR | Encerra a partida. |
+| `Operador` | Enumeração e execução das operações booleanas. |
+| `Manutencao` | Record que representa o desafio e valida as combinações de entradas. |
+| `Jogo` | Estado da partida, sequência de desafios e tokens. |
+| `JanelaPrincipal` | Navegação entre telas, transições e ciclo de vida da janela. |
+| `PainelFlames`, `PainelIntroducao`, `PainelApresentacao` | Abertura e narrativa. |
+| `PainelMenu`, `PainelTreinamento`, `PainelMonologo` | Menu, ensino interativo e contextualização. |
+| `PainelJogo`, `PainelFinal` | Desafios, feedback, recompensas e encerramento da partida. |
+| `BotaoPixel`, `FonteJogo` | Componentes e tipografia da interface. |
+| `AudioJogo` | Reprodução, cache e liberação de recursos de áudio. |
+| `Main` | Protótipo em console preservado como referência. |
 
-### Como jogar
+```text
+still-operational/
+├── src/
+│   ├── main/
+│   │   ├── java/com/stilloperational/
+│   │   └── resources/
+│   │       └── audio/
+│   └── test/java/com/stilloperational/
+├── pom.xml
+├── StillOperational.ico
+├── gerar-executavel.ps1
+└── README.md
+```
 
-1. Execute o programa.
-2. Leia o problema de manutenção apresentado no console.
-3. Digite o operador lógico que considera correto.
-4. Pressione Enter para confirmar a resposta.
-5. Caso acerte, receba um token e avance para a próxima manutenção.
-6. Caso erre, tente novamente.
-7. Conclua todas as manutenções para finalizar a partida.
+## Testes e validação
 
-### Tokens e progressão
+JUnit 5.11.4 e Maven Surefire 3.5.2.
 
-Cada manutenção concluída concede um token ao jogador. As fases são disponibilizadas sequencialmente e respostas incorretas não concedem recompensas.
+| Classe de teste | Escopo | Testes |
+|---|---|---:|
+| OperadorTest | Tabelas-verdade de AND, OR e NOT | 3 |
+| ManutencaoTest | Respostas corretas e incorretas | 2 |
+| JogoTest | Estado inicial, avanço, erro sem avanço e acesso após conclusão | 4 |
+| IntegracaoTest | Partida completa com erro, acertos e três tokens | 1 |
+| **Total** | | **10** |
 
-Ao concluir todas as manutenções, o sistema informa que a instalação foi estabilizada.
+Execute `mvn test` ou Maven → Lifecycle → test no IntelliJ.
 
-O progresso é mantido apenas durante a partida. Ao encerrar o programa, uma nova execução começa do início.
+Resultado registrado no computador do desenvolvedor em 26/11/2026, às 23:49:44 (UTC−03:00), na versão de código [8f291e5](https://github.com/otaviz/still-operational/commit/8f291e5b9212f1b3d7b123df4425a2678b134d79):
 
-## Revisão de código e refatoração
+```text
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+```
 
-A revisão interna realizada em 24/11/2026 resultou nas seguintes melhorias:
+Os testes automatizados cobrem o núcleo lógico. A interface gráfica, a narrativa, os recursos de áudio, as animações e o executável foram verificados manualmente pelo desenvolvedor; não fazem parte da cobertura automatizada apresentada.
 
-- Fechamento automático do Scanner utilizando try-with-resources.
-- Melhoria da organização e legibilidade do código.
-- Tratamento de acesso a manutenções após a conclusão da partida.
-- Ampliação dos testes do operador NOT.
-- Inclusão de teste para validar a proteção após o término da partida.
+## Histórico de desenvolvimento
 
-Após as alterações, os 10 testes automatizados foram executados com sucesso, sem falhas ou erros.
+O projeto evoluiu de um protótipo em console para uma aplicação gráfica completa. A revisão do código introduziu validação dos desafios, proteção contra acesso após o fim da partida, separação entre regras de negócio e apresentação, testes automatizados e controle do ciclo de vida de animações e áudio.
 
-## Direção do projeto
+Protótipo de interface: [Still Operational — Figma](https://www.figma.com/design/CVCgXf5ztXF8xSbpTq3YBH/STILL-OPERATIONAL).
 
-A proposta final é um jogo **2D em pixel art estilizada**, com exploração de uma instalação futurista, personagens, situações cômicas e puzzles de lógica booleana.
+## Créditos
 
-A versão em console não substitui essa proposta: ela é a base técnica para o desenvolvimento das próximas versões.
+**Otávio Augusto dos Reis Nascente e Costa**  
+Desenvolvimento individual — Engenharia de Software II, turma ESN3/2026-2.  
+FLAMES // CODE — Burn Them Down.
 
-Entre os próximos passos estão a integração com uma interface visual, o salvamento local do progresso e a ampliação das manutenções.
-
-## Autor
-
-Otávio Augusto dos Reis Nascente e Costa
-
-Projeto acadêmico — Engenharia de Software II.
+A identificação e as condições de licença dos recursos de terceiros, incluindo fonte e áudio, devem ser verificadas antes de redistribuição pública. Este repositório não declara uma licença de redistribuição para esses recursos.
