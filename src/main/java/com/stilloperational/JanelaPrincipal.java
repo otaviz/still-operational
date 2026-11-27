@@ -35,6 +35,11 @@ public class JanelaPrincipal extends JFrame {
     public JanelaPrincipal() {
 
         setTitle("Still Operational");
+
+        setIconImage(new ImageIcon(
+                getClass().getResource("/icone.png")
+        ).getImage());
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
